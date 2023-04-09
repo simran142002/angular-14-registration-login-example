@@ -1,0 +1,113 @@
+<ng-container>
+<h1>Book an Appointment</h1>
+<ng-container >
+    <div class="card">
+        <div class="card-header">
+            Appointment list
+        </div>
+        <div class="card-body">
+            <p class="card-text">We will check the availabilty and update you with the date and time</p>
+          <p class="card-text">Payment has to be done once the appointment confirmation notification is received.</p>
+          <p class="card-text">We will try to fulfil your time and date requirements but it may not be same based on the doctors availabilty</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+</ng-container>
+<img id="conceptArt" src="../../../assets/doctor.png" alt="graphs" width="30%" height="10%" style="margin-left: 40%;"> 
+<form *ngIf="!loading" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row" style="margin-left: 5%; margin-bottom: 5px;">
+        <div class="col-5 col">
+            <label class="form-label">Dog Name</label>
+            <input type="text" formControlName="dogName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.dogName.errors }" />
+            <div *ngIf="submitted && f.dogName.errors" class="invalid-feedback">
+                <div *ngIf="f.dogName.errors.required">Dog Name is required</div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-left: 5%; margin-bottom: 2px;">
+        <div class="col-10 col">
+            <label class="form-label">Owner Contact</label>
+            <input type="text" formControlName="ownerContact" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.ownerContact.errors }" />
+            <div *ngIf="submitted && f.ownerContact.errors" class="invalid-feedback">
+                <div *ngIf="f.ownerContact.errors.required">Contact is required</div>
+            </div>
+        </div>
+        <div class="row" style="margin-left: -0.7%;">
+            <div class="col-5 col">
+                <label class="form-label">Date</label>
+                <input class="form-control" formControlName="date" type="text" onfocus="(this.type = 'date')"
+                    onblur="(this.type='text')" [(ngModel)]="date"
+                     placeholder="Select the Date">
+            </div>
+            <div class="col-5 col ">
+                <label class="form-label">Time</label>
+                <input type="time" class="form-control" formControlName="time" [(ngModel)]="estimatedTimeHrs"
+                     placeholder="Hrs:Mins">
+            </div>
+        </div>
+        <div class="col-10 col">
+            <label class="form-label">Address</label>
+            <input type="text" formControlName="address" class="form-control" />
+            <div >
+                <div>Adddress is required</div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-left: 5%;">
+        <div class="col-2 col">
+            <label class="form-label">Age</label>
+            <input type="text" formControlName="age" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.age.errors }" />
+            <div *ngIf="submitted && f.age.errors" class="invalid-feedback">
+                <div *ngIf="f.age.errors.required">Age is required</div>
+            </div>
+        </div>
+        <div class="col-4 col">
+            <label class="form-label">Breed</label>
+            <input type="text" formControlName="breed" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.breed.errors }" />
+            <div *ngIf="submitted && f.breed.errors" class="invalid-feedback">
+                <div *ngIf="f.breed.errors.required">Breed is required</div>
+            </div>
+        </div>
+        <div class="col-4 mb-3 col">
+            <label class="form-label">Gender</label>
+            <input type="text" formControlName="gender" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.gender.errors }" />
+            <div *ngIf="submitted && f.gender.errors" class="invalid-feedback">
+                <div *ngIf="f.gender.errors.required">Gender is required</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mb-3" style="margin-left: 6%;">
+        <button [disabled]="submitting" class="btn btn-primary">
+            <span *ngIf="submitting" class="spinner-border spinner-border-sm me-1"></span>
+            Book
+        </button>
+        <a routerLink="/users" class="btn btn-link">Cancel</a>
+    </div>
+</form>
+</ng-container>
+<h1>Appointment list</h1>
+<a routerLink="add" class="btn btn-sm btn-success mb-2">Add User</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="width: 30%">Dog Name</th>
+            <th style="width: 30%">Time</th>
+            <th style="width: 30%">Date</th>
+            <th style="width: 10%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{dogName}}</td>
+            <td>{{time}}</td>
+            <td>{{date}}</td>
+            <td style="white-space: nowrap">
+                <!-- <a routerLink="edit/{{user.id}}" class="btn btn-sm btn-primary me-1">Edit</a> -->
+                <!-- <button (click)="deleteUser(user.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="user.isDeleting">
+                    <span *ngIf="user.isDeleting" class="spinner-border spinner-border-sm"></span>
+                    <span *ngIf="!user.isDeleting">Delete</span>
+                </button> -->
+            </td>
+    </tbody>
+</table>

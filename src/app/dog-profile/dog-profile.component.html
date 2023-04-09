@@ -1,0 +1,92 @@
+<button type="button" class="btn btn-primary btn-lg" (click)="createProfile()">Create Pet Profile</button>
+<ng-container *ngIf="createPetProfile">
+<h1>Create Dog Profile</h1>
+<img id="conceptArt" src="../../../assets/dog.png" alt="graphs" width="10%" height="10%" style="margin-left: 40%;"> 
+<form *ngIf="!loading" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-5 col">
+            <label class="form-label">Dog Name</label>
+            <input type="text" formControlName="dogName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.dogName.errors }" />
+            <div *ngIf="submitted && f.dogName.errors" class="invalid-feedback">
+                <div *ngIf="f.dogName.errors.required">Dog Name is required</div>
+            </div>
+        </div>
+        <div class="col-5 col">
+            <label class="form-label">Owner Name</label>
+            <input type="text" formControlName="ownerName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.ownerName.errors }" />
+            <div *ngIf="submitted && f.ownerName.errors" class="invalid-feedback">
+                <div *ngIf="f.ownerName.errors.required">Owner Name is required</div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-5 col">
+            <label class="form-label">Owner Contact</label>
+            <input type="text" formControlName="ownerContact" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.ownerContact.errors }" />
+            <div *ngIf="submitted && f.ownerContact.errors" class="invalid-feedback">
+                <div *ngIf="f.ownerContact.errors.required">Contact is required</div>
+            </div>
+        </div>
+        <div class="col-5 col">
+            <label class="form-label">Address</label>
+            <input type="text" formControlName="address" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" />
+            <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+                <div *ngIf="f.address.errors.required">Adddress is required</div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2 col">
+            <label class="form-label">Age</label>
+            <input type="text" formControlName="age" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.age.errors }" />
+            <div *ngIf="submitted && f.age.errors" class="invalid-feedback">
+                <div *ngIf="f.age.errors.required">Age is required</div>
+            </div>
+        </div>
+        <div class="col-4 col">
+            <label class="form-label">Breed</label>
+            <input type="text" formControlName="breed" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.breed.errors }" />
+            <div *ngIf="submitted && f.breed.errors" class="invalid-feedback">
+                <div *ngIf="f.breed.errors.required">Breed is required</div>
+            </div>
+        </div>
+        <div class="col-4 mb-3 col">
+            <label class="form-label">Gender</label>
+            <input type="text" formControlName="gender" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.gender.errors }" />
+            <div *ngIf="submitted && f.gender.errors" class="invalid-feedback">
+                <div *ngIf="f.gender.errors.required">Gender is required</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mb-3">
+        <button [disabled]="submitting" class="btn btn-primary">
+            <span *ngIf="submitting" class="spinner-border spinner-border-sm me-1"></span>
+            Save
+        </button>
+        <a routerLink="/users" class="btn btn-link">Cancel</a>
+    </div>
+</form>
+</ng-container>
+<ng-container >
+    <div class="card">
+        <div class="card-header">
+            Pet Profile
+        </div>
+        <div class="card-body">
+            <p class="card-text">We suggest you to keep you pets record always updated.</p>
+          <h5 class="card-title">Owner Name: {{ownerName}}</h5>
+          <h5 class="card-title">Dog Name: {{dogName}}</h5>          
+          <h5 class="card-title">Address: {{address}}</h5>
+          <h5 class="card-title">Age: {{age}}</h5>
+          <h5 class="card-title">Breed: {{breed}}</h5>
+          <h5 class="card-title">Gender: {{gender}}</h5>
+          <h5 class="card-title">Contact: {{ownerContact}}</h5>
+          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+</ng-container>
+<div *ngIf="loading" class="text-center m-5">
+    <span class="spinner-border spinner-border-lg align-center"></span>
+</div>

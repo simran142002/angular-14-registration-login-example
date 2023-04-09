@@ -1,0 +1,94 @@
+<ng-container>
+    <h1>Day Care</h1>
+    <ng-container >
+        <div class="card">
+            <div class="card-header">
+                Appointment list
+            </div>
+            <div class="card-body">
+                <p class="card-text">Our per hour cost is Rupees 100</p>
+              <p class="card-text">Payment has to be done on the time of pick up</p>
+              <p class="card-text">Make sure you fill the dog profile so that we can get to know your pet's needs better.</p>
+              <a class="btn btn-primary" routerLink="/dogProfile" routerLinkActive="active">Dog Profile</a>
+            </div>
+          </div>
+    </ng-container>
+    <img id="conceptArt" src="../../../assets/daycare.png" alt="graphs" width="30%" height="10%" style="margin-right: 10%; "> 
+    <img id="conceptArt" src="../../../assets/dogBoarding.jpg" alt="graphs" width="20%" height="5%" style="margin-top: 0%;"> 
+    <img id="conceptArt" src="../../../assets/dogservice.png" alt="graphs" width="30%" height="10%" style="margin-top: 0%;"> 
+
+<ng-container style="margin-top: 5%;">
+    <form *ngIf="!loading" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="row" style="margin-left: 5%; margin-bottom: 5px;">
+            <div class="col-5 col">
+                <label class="form-label">Dog Name</label>
+                <input type="text" formControlName="dogName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.dogName.errors }" />
+                <div *ngIf="submitted && f.dogName.errors" class="invalid-feedback">
+                    <div *ngIf="f.dogName.errors.required">Dog Name is required</div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-left: 5%; margin-bottom: 2px;">
+            <div class="col-10 col">
+                <label class="form-label">Owner Contact</label>
+                <input type="text" formControlName="ownerContact" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.ownerContact.errors }" />
+                <div *ngIf="submitted && f.ownerContact.errors" class="invalid-feedback">
+                    <div *ngIf="f.ownerContact.errors.required">Contact is required</div>
+                </div>
+            </div>
+            <div class="row" style="margin-left: -0.7%;">
+                <div class="col-4 col">
+                    <label class="form-label">Date</label>
+                    <input class="form-control" formControlName="date" type="text" onfocus="(this.type = 'date')"
+                        onblur="(this.type='text')" [(ngModel)]="date"
+                         placeholder="Select the Date">
+                </div>
+                <div class="col-3 col ">
+                    <label class="form-label">Drop Time</label>
+                    <input type="time" class="form-control" formControlName="dropTime" [(ngModel)]="estimatedTimeHrs"
+                         placeholder="Hrs:Mins">
+                </div>
+                <div class="col-3 col ">
+                    <label class="form-label">Pickup Time</label>
+                    <input type="time" class="form-control" formControlName="pickupTime" [(ngModel)]="estimatedTimeHrs1"
+                         placeholder="Hrs:Mins">
+                </div>
+            </div>
+        </div>       
+        <div class="mb-3 mt-5" style="margin-left: 6%;">
+            <button [disabled]="submitting" class="btn btn-primary">
+                <span *ngIf="submitting" class="spinner-border spinner-border-sm me-1"></span>
+                Book
+            </button>
+            <a routerLink="/users" class="btn btn-link">Cancel</a>
+        </div>
+    </form>
+</ng-container>
+    </ng-container>
+    <ng-container>
+    <h1 style="margin-left: 5%;">Booking list</h1>
+    <table class="table table-striped" style="margin-left: 5%; margin-right: 100%;">
+        <thead>
+            <tr>
+                <th style="width: 30%">Dog Name</th>
+                <th style="width: 30%">Time</th>
+                <th style="width: 30%">Date</th>
+                <th style="width: 10%"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{dogName}}</td>
+                <td>{{pickupTime}}</td>
+                <td>{{dropTime}}</td>
+                <td>{{date}}</td>
+                <td style="white-space: nowrap">
+                    <!-- <a routerLink="edit/{{user.id}}" class="btn btn-sm btn-primary me-1">Edit</a> -->
+                    <!-- <button (click)="deleteUser(user.id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="user.isDeleting">
+                        <span *ngIf="user.isDeleting" class="spinner-border spinner-border-sm"></span>
+                        <span *ngIf="!user.isDeleting">Delete</span>
+                    </button> -->
+                </td>
+        </tbody>
+    </table>
+    </ng-container>

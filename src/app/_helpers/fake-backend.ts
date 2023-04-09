@@ -2,6 +2,7 @@
 import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, materialize, dematerialize } from 'rxjs/operators';
+import { Appointment, dogProfile, DayCare } from '@app/_models';
 
 // array in local storage for registered users
 const usersKey = 'angular-14-registration-login-example-users';
@@ -18,10 +19,22 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             switch (true) {
                 case url.endsWith('/users/authenticate') && method === 'POST':
                     return authenticate();
+                case url.endsWith('/dogProfile') && method === 'POST':
+                    return updateDogProfile();
+                case url.endsWith('/appointment') && method === 'POST':
+                    return updateAppointmnet();
                 case url.endsWith('/users/register') && method === 'POST':
                     return register();
+                case url.endsWith('/dayCare') && method === 'POST':
+                    return updateDayCare();
                 case url.endsWith('/users') && method === 'GET':
                     return getUsers();
+                case url.endsWith('/dogProfile') && method === 'GET':
+                    return getDog();
+                case url.endsWith('/appointment') && method === 'GET':
+                    return getAppointment();
+                case url.endsWith('/dayCare') && method === 'GET':
+                    return getDayCare();
                 case url.match(/\/users\/\d+$/) && method === 'GET':
                     return getUserById();
                 case url.match(/\/users\/\d+$/) && method === 'PUT':
@@ -46,6 +59,34 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             })
         }
 
+        function updateDogProfile() {
+            const dogProfile = body;
+            localStorage.setItem(usersKey, JSON.stringify(dogProfile));
+            return ok({
+                ...basicpetDetails(dogProfile)
+            })
+        }
+
+        function updateAppointmnet() {
+            const appointment = body;
+            localStorage.setItem(usersKey, JSON.stringify(appointment));
+            return ok({
+                ...basicAppointmentDetails(appointment)
+            })
+        }
+
+        function updateDayCare() {
+            const dayCare = body;
+            localStorage.setItem(usersKey, JSON.stringify(dayCare));
+            return ok({
+                ...basicDaycareDetails(dayCare)
+            })
+        }
+
+        function getDayCare() {
+            return ok(basicDaycareDetails(DayCare));
+        }
+
         function register() {
             const user = body
 
@@ -57,6 +98,14 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             users.push(user);
             localStorage.setItem(usersKey, JSON.stringify(users));
             return ok();
+        }
+
+        function getDog() {
+            return ok(basicpetDetails(dogProfile));
+        }
+
+        function  getAppointment() {
+            return ok(basicAppointmentDetails(Appointment));
         }
 
         function getUsers() {
@@ -117,6 +166,22 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function basicDetails(user: any) {
             const { id, username, firstName, lastName } = user;
             return { id, username, firstName, lastName };
+        }
+
+
+        function basicDaycareDetails(dayCare: any) {
+            const { dogName, ownerContact, date, pickupTime, dropTime} = dayCare;
+            return { dogName, ownerContact, date, pickupTime, dropTime};
+        }
+
+        function basicpetDetails(dog: any) {
+            const {dogName, ownerName, address, age, breed, gender, ownerContact} = dog;
+            return {dogName, ownerName, address, age, breed, gender, ownerContact};
+        }
+
+        function basicAppointmentDetails(appointment: any) {
+            const {dogName, age, breed, gender, date, time, ownerContact} = appointment;
+            return {dogName, age, breed, gender, date, time, ownerContact};
         }
 
         function isLoggedIn() {
